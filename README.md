@@ -1,2 +1,2 @@
 # Cpp-Python-Learning
-Exploration of features in C++ and Python (3.7) and adaptation of my personal programming style.
+Exploration of features in C++ and Python (3.7) & personal programming style development.
