@@ -1,4 +1,7 @@
-# Dictionary & Exceptions
+# Dictionary, Exceptions & Map
+from itertools import product
+
+
 def solve(n, a, b):
     d = {}
     res = 0
@@ -14,6 +17,14 @@ def solve(n, a, b):
     return res
 
 
+def solve():
+    k, m = map(int, input().split())
+    n = list(list(map(int, input().split()[1:])) for _ in range(k))
+    n = list(map(lambda i: sum(x**2 for x in i) % m, product(*n)))
+    print(max(n))
+
+
+solve()
 inp = input()
 N = input().split(' ')
 A = input().split(' ')
