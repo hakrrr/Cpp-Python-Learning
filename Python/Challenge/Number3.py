@@ -1,5 +1,4 @@
-# itertools
-from itertools import product
+# generators + inline conditions
 
 """
 Notes on generators:
@@ -25,5 +24,15 @@ def yd():
     yield 3
 
 
+def swap_case(s):
+    res = ''
+    for c in s:
+        if c.isalpha():
+            c = chr(ord(c) + (32 if ord(c) < 91 else -32))
+        res += c
+    return res
+
+
 for i in yd():
     print(i)
+print(swap_case('A hello'))
