@@ -29,11 +29,10 @@ YZYYZYYZYZYYZYZYY
 
 
 def solve(a, b):
-    size = len(a) + len(b)
     a += 'z'
     b += 'z'
     ptrA = ptrB = 0
-    for _ in range(size):
+    for _ in range(len(a) + len(b) - 2):
         if a[ptrA:] <= b[ptrB:]:
             yield a[ptrA]
             ptrA += 1
