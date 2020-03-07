@@ -2,7 +2,6 @@ import numpy as np
 import gym
 import random
 import time
-from IPython.display import clear_output
 # @https://deeplizard.com/learn/video/HGeI30uATws
 
 env = gym.make("FrozenLake-v0")
@@ -26,6 +25,7 @@ min_exploration_rate = 0.01
 exploration_decay_rate = 0.001
 
 # q-learning algorithm
+print("***Training...***")
 rewards_all_episodes = []
 
 for episode in range(num_episodes):
@@ -81,7 +81,7 @@ for episode in range(3):
     time.sleep(1)
 
     for step in range(max_steps_per_episode):
-        clear_output(wait=True)
+        print('\n' * 100)
         env.render()
         time.sleep(0.3)
 
@@ -89,7 +89,7 @@ for episode in range(3):
         new_state, reward, done, info = env.step(action)
 
         if done:
-            clear_output(wait=True)
+            print('\n' * 100)
             env.render()
             if reward == 1:
                 print("***You reached the goal***")
@@ -97,7 +97,7 @@ for episode in range(3):
             else:
                 print("***You fell through a hole!***")
                 time.sleep(3)
-            clear_output(wait=True)
+            print('\n' * 100)
             break
 
         state = new_state
