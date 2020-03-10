@@ -11,7 +11,7 @@ state_space_size = env.observation_space.n
 q_table = np.zeros((state_space_size, action_space_size))
 
 # limits
-num_episodes = 10000
+num_episodes = 100000
 max_steps_per_episode = 100
 
 # learning rate (alpha) & discount rate (gamma)

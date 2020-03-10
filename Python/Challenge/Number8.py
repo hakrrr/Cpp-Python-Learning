@@ -1,31 +1,5 @@
 # yield boosts the performance
 from timeit import default_timer as time
-'''
-1
-ZZYYZZZA
-ZZYYZZZB
-
-Sol: ZZYYZZYYZZZAZZZB
-
-5
-DAD
-DAD
-ABCBA
-BCBA
-BAC
-BAB
-DAD
-DABC
-YZYYZYZYY
-ZYYZYZYY
-
-Sol:
-DADADD
-ABBCBACBA
-BABABC
-DABCDAD
-YZYYZYYZYZYYZYZYY
-'''
 
 
 def solve(a, b):
