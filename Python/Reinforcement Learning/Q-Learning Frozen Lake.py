@@ -2,6 +2,7 @@ import numpy as np
 import gym
 import random
 import time
+import torch
 # @https://deeplizard.com/learn/video/HGeI30uATws
 
 env = gym.make("FrozenLake-v0")
@@ -23,6 +24,11 @@ exploration_rate = 1
 max_exploration_rate = 1
 min_exploration_rate = 0.01
 exploration_decay_rate = 0.001
+
+tens = torch.tensor([1])
+tens2 = torch.tensor([[[1., -1.], [1., -1.]]])
+asd = torch.cat(tens, tens2)
+print(torch)
 
 # q-learning algorithm
 print("***Training...***")

@@ -133,7 +133,8 @@ class CartPoleEnvManager:
         screen = self.crop_screen(screen)
         return self.transform_screen_data(screen)
 
-    def crop_screen(self, screen):
+    @staticmethod
+    def crop_screen(screen):
         screen_height = screen.shape[1]
         # Strip off top and bottom
         top = int(screen_height * 0.4)
@@ -152,5 +153,51 @@ class CartPoleEnvManager:
         return resize(screen).unsqeeze(0).to(self.device)  # add a batch dimension via unsqueeze
 
 
-Experience = namedtuple('Experience', ('state', 'action', 'next_state', 'reward'))
+def plot(values, moving_avg_period):
+    plt.figure(2)
+    plt.clf()
+    plt.title('Training...')
+    plt.xlabel('Episode')
+    plt.ylabel('Duration')
+    plt.plot(values)
+    plt.plot(get_moving_average(moving_avg_period, values))
+    plt.pause(0.001)
 
+
+def get_moving_average(period, values):
+    values = torch.tensor(values, dtype=torch.float)
+    if len(values) >= period:
+        moving_avg = values.unfold(dimension=0, size=period, step=1) \
+            .mean(dim=1).flatten(start_dim=0)
+        moving_avg = torch.cat((torch.zeros(period-1), moving_avg))
+        return moving_avg.numpy()
+    else:
+        moving_avg = torch.zeros(len(values))
+        return moving_avg.numpy()
+
+
+# main()
+Experience = namedtuple('Experience', ('state', 'action', 'next_state', 'reward'))
+batch_size = 256
+gamma = 0.999
+eps_start = 1
+eps_end = 0.01
+eps_decay = 0.001
+target_update = 10
+memory_size = 100000
+lr = 0.001  # learning rate
+num_episodes = 1000
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+em = CartPoleEnvManager(device)
+strategy = EpsilonGreedyStrategy(eps_start, eps_end, eps_decay)
+agent = Agent(strategy, em.num_actions_available(), device)
+memory = ReplayMemory(memory_size)
+
+policy_net = DQN(em.get_screen_height(), em.get_screen_width()).to(device)
+target_net = DQN(em.get_screen_height(), em.get_screen_width()).to(device)
+target_net.load_state_dict(policy_net.state_dict())  # set same weights
+target_net.eval()
+optimizer = optim.Adam(params=policy_net.parameters(), lr=lr)
+
+# Training Loop
