@@ -13,7 +13,7 @@ import torch.optim as optim
 import torch.nn.functional as F
 import torchvision.transforms as T
 
-
+# Eps-greedy strategy for action selection
 # @https://deeplizard.com/learn/video/PyQNfsGUnQA
 
 
